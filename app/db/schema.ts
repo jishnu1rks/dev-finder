@@ -1,9 +1,11 @@
+import { sql } from "drizzle-orm";
 import {
   timestamp,
   pgTable,
   text,
   primaryKey,
   integer,
+  uuid,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "next-auth/adapters";
 
@@ -65,3 +67,17 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   })
 );
+
+export const room = pgTable("room", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  language: text("language").notNull(),
+  githubRepo: text("githubRepo"),
+});
+
+export type Room = typeof room.$inferSelect;
