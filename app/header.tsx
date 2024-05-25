@@ -20,7 +20,7 @@ function ActionButton() {
   const isLoggedIn = !!session.data;
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         {isLoggedIn ? (
           <Button variant="ghost">
             <Avatar className="mr-2">
@@ -39,7 +39,13 @@ function ActionButton() {
 
       {isLoggedIn && (
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => signOut()}>
+          <DropdownMenuItem
+            onClick={() =>
+              signOut({
+                callbackUrl: "/",
+              })
+            }
+          >
             <LogOutIcon className="mr-2" />
             Sign Out
           </DropdownMenuItem>

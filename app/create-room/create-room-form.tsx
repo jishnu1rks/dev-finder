@@ -21,7 +21,7 @@ const formSchema = z.object({
   name: z.string().min(1).max(50),
   description: z.string().min(1).max(500),
   githubRepo: z.string().min(1),
-  language: z.string().min(1).max(50),
+  tags: z.string().min(1).max(50),
 });
 
 export default function CreateRoomForm() {
@@ -32,7 +32,7 @@ export default function CreateRoomForm() {
       name: "",
       description: "",
       githubRepo: "",
-      language: "",
+      tags: "",
     },
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -50,7 +50,7 @@ export default function CreateRoomForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="eg: facebook" />
               </FormControl>
               <FormDescription>This is your public room name.</FormDescription>
               <FormMessage />
@@ -64,7 +64,10 @@ export default function CreateRoomForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input
+                  {...field}
+                  placeholder="Project is mainly to help this people to chat"
+                />
               </FormControl>
               <FormDescription>Describe your project</FormDescription>
               <FormMessage />
@@ -78,7 +81,10 @@ export default function CreateRoomForm() {
             <FormItem>
               <FormLabel>Github Repo</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input
+                  {...field}
+                  placeholder="eg: https://github.com/projectname"
+                />
               </FormControl>
               <FormDescription>
                 Github repo link for your project.
@@ -89,15 +95,16 @@ export default function CreateRoomForm() {
         />
         <FormField
           control={form.control}
-          name="language"
+          name="tags"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Primary programming language</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="next js, tailwind" />
               </FormControl>
               <FormDescription>
-                Mention the primary programming language of your project.
+                Mention the primary programming language, frameworks, libraries
+                that you are using in your project.
               </FormDescription>
               <FormMessage />
             </FormItem>

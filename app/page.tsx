@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getRooms } from "./data-access/rooms";
+import TagsList, { splitTags } from "./components/tags-list";
 
 function RoomCard({ room }: { room: Room }) {
   return (
@@ -19,21 +20,23 @@ function RoomCard({ room }: { room: Room }) {
         <CardTitle>{room.name}</CardTitle>
         <CardDescription>{room.description}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <Button variant="link">
+      <CardContent className="flex flex-col gap-4">
+        <TagsList tags={splitTags(room.tags)} />
+        <Button variant="ghost" className="w-fit">
           <Link
             href={room.githubRepo ?? ""}
             target="_blank"
             rel="noreferrer noopener"
             className="flex items-center gap-2"
           >
-            Github Link <ComputerIcon className="ml-2" />
+            <ComputerIcon className="mr-2" />
+            Github Link
           </Link>
         </Button>
       </CardContent>
-      <CardFooter className="absolute bottom-0 right-0">
+      <CardFooter className="">
         <Button>
-          <Link href={`/room/${room.id}`}>Join Room</Link>
+          <Link href={`/rooms/${room.id}`}>Join Room</Link>
         </Button>
       </CardFooter>
     </Card>
